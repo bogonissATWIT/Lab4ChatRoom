@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -38,19 +36,40 @@ public class ChatServerCode {
 			for(int i = 0; i < prevMsg.size();i++) {
 				outToClient.writeBytes(prevMsg.get(i));
 			}
-			sendToAll(name+" has joined the chat!\n");
+			sendToAll(name + " has joined the chat!\n");
 			
 			while(true) {
+				
+				
+				//We need to figure out which person in the chatroom it is, and instead of displaying RECEIVED
+				//it should display the name of the person who sent the message
+				
+				
 				clientMessage = inFromClient.readLine();
-				System.out.println("RECEIVED: " + clientMessage);
+				//System.out.println("RECEIVED: " + clientMessage);
+				System.out.println(name + ": " + clientMessage);
+				
+				
+				//We should try to see if we can find a way to not display "quit" in the chatroom when somebody
+				//wants to quit, it should just instead say that they left the chat
+				
 				if(clientMessage.toUpperCase().equals("QUIT")) {
+					sendToAll(name + " has left the chat!\n");
+					//Just to make sure that it recognizes it
+					System.out.println(name + " has left the chat!\n");
 					break;
 				}
 				String modifiedMessage = clientMessage + "\r\n";	
 				sendToAll(modifiedMessage,name);
 			}
 			
-			sendToAll(name + " has left the chat!\n");
+			//While testing I typed quit and nothing was relayed to the console 
+			//so I put it before it breaks out of the while loop
+			
+			//sendToAll(name + " has left the chat!\n");
+			
+			
+			
 			closeConnection(name);
 			inFromClient.close();
 			outToClient.close();

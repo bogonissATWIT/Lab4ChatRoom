@@ -38,10 +38,19 @@ public class ChatClientCode {
 		Chatroom chatRoom = new Chatroom(outToServer,inFromServer);
 		Thread thread = new Thread(chatRoom);
 		thread.start();
-		System.out.println("Welcome to the chat room! before you can begin please tell us your name.");
+		//optional formatting changes just to make it look a little nicer
+		System.out.println("\t-= Welcome to the chat room! =-\nbefore you can begin, please tell us your name: ");
 		Scanner s = new Scanner(System.in);
 		String message = s.nextLine();
 		outToServer.writeBytes(message + "\r\n");
+		
+		//Maybe try to locally display the current members in the chatroom?
+		//This should be easy for us to do
+		
+		//https://www.codegrepper.com/code-examples/java/Java+change+color+of+text+printed
+		//I was also considering doing something like this where we can add color to different people
+		//aswell as changing colors of server chat messages.
+		
 		System.out.println("You are now in the chat room! If you wish to leave please say \"quit\".");
 		while(!message.toUpperCase().equals("QUIT")) {
 			message = s.nextLine();
